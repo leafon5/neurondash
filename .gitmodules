@@ -6,9 +6,9 @@
 	path = lib/minhook
 	url = https://github.com/TsudaKageyu/minhook.git
 	branch = 423d1e45af2ed2719a5c31e990e935ef301ed9c3
-[submodule "lib/gd.h"]
-	path = lib/gd.h
-	url = https://github.com/HJfod/gd.h.git
 [submodule "lib/mat-dash"]
 	path = lib/mat-dash
 	url = https://github.com/matcool/mat-dash.git
+[submodule "lib/gd.h"]
+	path = lib/gd.h
+	url = https://github.com/matcool/gd.h.git

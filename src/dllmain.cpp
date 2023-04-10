@@ -6,7 +6,7 @@
 // matdash::create_console
 #include <matdash/console.hpp>
 
-#include "hooks.hpp"
+#include "hookmain.hpp"
 
 
 void mod_main(HMODULE module) {
