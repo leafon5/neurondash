@@ -10,7 +10,7 @@ warning: really bad code ahead
 ## To do:
 - im lazy
 
-## Compilation
+## Building
 
 MSVC 2017 and cmake is perfect for this
 
@@ -21,9 +21,11 @@ type these 2 commands:
 ```bash
 cmake -B build -A win32 
 ```
-- configures the project
+-
+that configures the project
 
 and then
 ```bash
 cmake --build build --config Release
 ```
+builds it
