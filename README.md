@@ -21,7 +21,6 @@ type these 2 commands:
 ```bash
 cmake -B build -A win32 
 ```
--
 that configures the project
 
 and then
