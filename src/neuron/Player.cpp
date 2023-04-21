@@ -50,45 +50,63 @@ GJPlayerSize checkSize(gd::PlayerObject* player) {
 Player::Player() {
 }
 
-void Player::init(gd::PlayerObject* player, bool isMain) {
+void Player::init(gd::PlayerObject* player, gd::PlayLayer* layer, bool isMain) {
+// i will optimize this i promise you
+    this->playlayer = layer;
     this->isMain = isMain;
+    this->isDead = &this->playlayer->m_isDead;
     this->playerobj = player;
     this->gamemode = checkMode(player);
     this->gravity = checkGrav(player);
     this->size = checkSize(player);
     this->speed = player->m_playerSpeed;
-    this->x = &player->m_position.x;
-    this->y = &player->m_position.y;
-    this->position = {x, y};
+    this->y_acc = &player->m_yAccel;
+    this->isGrounded = &player->m_isOnGround;
+    this->isHolding = &player->m_isHolding;
+    this->frame = 0;
 }
-// Define member functions
 
 void Player::update() {
     GJGameMode currentGM = checkMode(this->playerobj);
     GJPlayerGravity currentGV = checkGrav(this->playerobj);
     GJPlayerSize currentSZ = checkSize(this->playerobj);
+    this->x = this->playerobj->m_position.x;
+    this->y = this->playerobj->m_position.y;
     float currentSP = this->playerobj->m_playerSpeed;
     if(this->gamemode != currentGM) {
         this->gamemode = currentGM;
-        std::cout << "Gamemode changed to: " << GMToString(currentGM) << std::endl;
+        // std::cout << "Gamemode changed to: " << GMToString(currentGM) << std::endl;
     }
     if(this->gravity != currentGV) {
         this->gravity = currentGV;
-        std::cout << "Gravity Changed to " << GVToString(currentGV) << std::endl;
+        // std::cout << "Gravity Changed to " << GVToString(currentGV) << std::endl;
     }
     if(this->size != currentSZ) {
         this->size = currentSZ;
-        std::cout << "Size changed to " << SZToString(currentSZ) << std::endl;
+        // std::cout << "Size changed to " << SZToString(currentSZ) << std::endl;
     }
     if(this->speed != currentSP) {
         this->speed = currentSP;
-        std::cout << "Speed changed to " << currentSP << std::endl; 
+        // std::cout << "Speed changed to " << currentSP << std::endl; 
+    }
+    this->frame++;
+}
+
+void Player::onClick() {
+    if(!this->isDead) {
+        // ...
+    }
+}
+void Player::onRelease() {
+    if(!this->isDead) {
+        // ...
     }
 }
 
-void Player::getPos() {
-    // Implementation
+void Player::click() {
+    this->playerobj->pushButton(1);
 }
-
-
+void Player::release() {
+    this->playerobj->releaseButton(1);
+}
 }

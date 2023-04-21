@@ -6,6 +6,7 @@ warning: really bad code ahead
 ## Currently working on:
 - the mod thing that will get the values i need for the input nodes
     - most of the player value reading stuff is done
+- a macro replay system
 ## To do:
 - i need to do stuff like region of interest and play a bit with the levels info sooo
 

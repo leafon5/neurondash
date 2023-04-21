@@ -49,10 +49,17 @@ void PlayLayer_resetLevel(gd::PlayLayer* self) {
     player_1 = new neuron::Player();
     player_2 = new neuron::Player();
 
-    player_1->init(self->m_player1, true);
-    player_2->init(self->m_player2, false);
+    player_1->init(self->m_player1, self, true);
+    player_2->init(self->m_player2, self, false);
 }
-
+void PlayLayer_pushButton(gd::PlayLayer* self, int idk, bool button) {
+    player_1->onClick();
+    matdash::orig<&PlayLayer_pushButton>(self, idk, button);
+}
+void PlayLayer_releaseButton(gd::PlayLayer* self, int idk, bool button) {
+    player_1->onRelease();
+    matdash::orig<&PlayLayer_releaseButton>(self, idk, button);
+}
 matdash::cc::thiscall<void> PlayLayer_Update(gd::PlayLayer* self, float dt) {
     matdash::orig<&PlayLayer_Update>(self, dt);
     player_2->update();
@@ -71,5 +78,7 @@ void Hooks::init() {
 //   matdash::add_hook<&PlayLayer_update_, matdash::Thiscall>(gd::base + 0x2029c0);
     matdash::add_hook<&PlayLayer_Update>(gd::base + 0x2029C0);
 
+    matdash::add_hook<&PlayLayer_pushButton>(gd::base + 0x111500);
+    matdash::add_hook<&PlayLayer_releaseButton>(gd::base + 0x111660);
 
 }
