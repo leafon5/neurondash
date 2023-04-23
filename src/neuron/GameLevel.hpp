@@ -1,21 +1,18 @@
 #pragma once
 
-
 #include "../includes.h"
-#include <codecvt>
-#include <locale>
 
 #include "./playerproperties.hpp"
+#include "utils.hpp"
 
 
 namespace neuron {
 class GameLevel {
     public:
-        void init(gd::GJGameLevel* level, bool isOfficial);
+        GameLevel(gd::GJGameLevel* level, bool isOfficial);
         std::string level;
-        std::string decodeLevel(gd::string levelString)
+        void decodeLevel(gd::string levelString);
     private:
-        gd::string* levelString;
         bool isOfficial;
 
         GJGameMode gamemode; // kA2

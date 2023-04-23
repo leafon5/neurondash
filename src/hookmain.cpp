@@ -3,13 +3,10 @@
 #include <matdash/minhook.hpp>
 
 
-gd::GJGameLevel* gjlevel = nullptr;
 gd::PlayLayer* playlayer = nullptr;
 neuron::Player* player_1 = nullptr;
 neuron::Player* player_2 = nullptr; 
-
-
-
+neuron::GameLevel* nlevel = nullptr;
 
 bool inGame = false;
 
@@ -17,23 +14,27 @@ bool PlayLayer_init(gd::PlayLayer* self, gd::GJGameLevel* level) {
     if (!matdash::orig<&PlayLayer_init>(self, level)) return false;
     inGame = true;
     std::cout << "PlayLayer " << (inGame ? "on" : "off") << std::endl;
-    gjlevel = level;
     playlayer = self;
+
+    nlevel = new neuron::GameLevel(level, true);
+
     return true;
 }
 
+// now the onquit doesnt want to hook????????
 void PlayLayer_onQuit(gd::PlayLayer* self) {
-    matdash::orig<&PlayLayer_onQuit, matdash::Thiscall>(self);
     inGame = false;
     std::cout << "PlayLayer " << (inGame ? "on" : "off") << std::endl;
-    gjlevel = nullptr;
     playlayer = nullptr;
     
     delete player_1;
     delete player_2;
+    delete nlevel;
 
     player_1 = nullptr;
     player_2 = nullptr;
+    nlevel = nullptr;
+    matdash::orig<&PlayLayer_onQuit, matdash::Thiscall>(self);
 }
 
 void PlayLayer_resetLevel(gd::PlayLayer* self) {
@@ -42,7 +43,7 @@ void PlayLayer_resetLevel(gd::PlayLayer* self) {
 
     delete player_1;
     delete player_2;
-    
+
     player_1 = nullptr;
     player_2 = nullptr;
 
@@ -78,6 +79,8 @@ void Hooks::init() {
 //   matdash::add_hook<&PlayLayer_update_, matdash::Thiscall>(gd::base + 0x2029c0);
     matdash::add_hook<&PlayLayer_Update>(gd::base + 0x2029C0);
 
+    // perhaps?
+    
     matdash::add_hook<&PlayLayer_pushButton>(gd::base + 0x111500);
     matdash::add_hook<&PlayLayer_releaseButton>(gd::base + 0x111660);
 

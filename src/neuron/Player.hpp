@@ -11,7 +11,7 @@ class Player {
             GJGameMode gamemode;
             GJPlayerGravity gravity;
             GJPlayerSize size;
-            std::vector<float*> position;
+            cocos2d::CCPoint* position;
             float speed;
             int frame;
             bool* isGrounded;

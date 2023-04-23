@@ -64,6 +64,7 @@ void Player::init(gd::PlayerObject* player, gd::PlayLayer* layer, bool isMain) {
     this->isGrounded = &player->m_isOnGround;
     this->isHolding = &player->m_isHolding;
     this->frame = 0;
+    this->position = &player->m_position;
 }
 
 void Player::update() {
