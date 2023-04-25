@@ -3,10 +3,10 @@
 #include <matdash/minhook.hpp>
 
 
-gd::PlayLayer* playlayer = nullptr;
 neuron::Player* player_1 = nullptr;
 neuron::Player* player_2 = nullptr; 
-neuron::GameLevel* nlevel = nullptr;
+// neuron::GameLevel* nlevel = nullptr;
+
 
 bool inGame = false;
 
@@ -14,9 +14,13 @@ bool PlayLayer_init(gd::PlayLayer* self, gd::GJGameLevel* level) {
     if (!matdash::orig<&PlayLayer_init>(self, level)) return false;
     inGame = true;
     std::cout << "PlayLayer " << (inGame ? "on" : "off") << std::endl;
-    playlayer = self;
+    std::cout << "GD BASE: " << &gd::base << std::endl;
+    std::cout << "playlayer addr:"<< &self << std::endl;
+    // delete nlevel;
+    // nlevel = nullptr;
 
-    nlevel = new neuron::GameLevel(level, true);
+    // std::cout << "new gamelevel" << std::endl;
+    // nlevel = new neuron::GameLevel(level, true);
 
     return true;
 }
@@ -25,16 +29,24 @@ bool PlayLayer_init(gd::PlayLayer* self, gd::GJGameLevel* level) {
 void PlayLayer_onQuit(gd::PlayLayer* self) {
     inGame = false;
     std::cout << "PlayLayer " << (inGame ? "on" : "off") << std::endl;
-    playlayer = nullptr;
     
     delete player_1;
     delete player_2;
-    delete nlevel;
+    // delete nlevel;
 
     player_1 = nullptr;
     player_2 = nullptr;
-    nlevel = nullptr;
+    // nlevel = nullptr;
+
+    // if(nlevel) {
+    //     std::cout << "GAMELEVEL NOT DELETED, MEMORY LEAK LOL" << std::endl;
+    // }
+    // else if(!nlevel) {
+    //     std::cout << "deleted lol" << std::endl;
+    // }
     matdash::orig<&PlayLayer_onQuit, matdash::Thiscall>(self);
+
+    // std::cout << nlevel << std::endl;
 }
 
 void PlayLayer_resetLevel(gd::PlayLayer* self) {
